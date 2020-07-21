@@ -27,6 +27,7 @@ class _SoundRecordPageState extends State<SoundRecordPage> {
   Widget build(BuildContext context) {
     ScreenUtil.init();
     var height = ScreenUtil.screenHeight;
+    var width = ScreenUtil.screenWidth;
 
     return Scaffold(
         appBar: PreferredSize(
@@ -34,38 +35,50 @@ class _SoundRecordPageState extends State<SoundRecordPage> {
             child: AppBar(
               title: Text('拍痰錄製'),
             )),
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: new EdgeInsets.all(8.0),
-              child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+        body: Center(
+            child: Container(
+                height: ScreenUtil.screenHeight,
+                width: ScreenUtil.screenWidth,
+                color: Colors.pink[100],
+                child: Column(
                   children: <Widget>[
-                    new FlatButton(
-                      onPressed: _isRecording ? null : _start,
-                      child: new Text("Start"),
-                      color: Colors.green,
+                    Padding(
+                      padding: new EdgeInsets.all(8.0),
+                      child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(top: height / 3.5),
+                              child: Image.asset('assets/soundRecord.png',
+                                  scale: 0.6),
+                            ),
+                            new Row(
+                              children: <Widget>[
+                                IconButton(
+                                  padding: EdgeInsets.only(
+                                      left: width / 2.8, top: 30),
+                                  icon: Image.asset('assets/recordStart.png'),
+                                  iconSize: 50,
+                                  onPressed: () {
+                                    _start();
+                                  },
+                                ),
+                                IconButton(
+                                  padding: EdgeInsets.only(top: 30),
+                                  icon: Image.asset('assets/recordStop.png'),
+                                  iconSize: 50,
+                                  onPressed: () {
+                                    _stop();
+                                  },
+                                ),
+                              ],
+                            ),
+                            new Text(
+                                "Audio recording duration : ${_recording.duration.toString()}")
+                          ]),
                     ),
-                    new FlatButton(
-                      onPressed: _isRecording ? _stop : null,
-                      child: new Text("Stop"),
-                      color: Colors.red,
-                    ),
-                    new TextField(
-                      controller: _controller,
-                      decoration: new InputDecoration(
-                        hintText: 'Enter a custom path',
-                      ),
-                    ),
-                    new Text("File path of the record: ${_recording.path}"),
-                    new Text("Format: ${_recording.audioOutputFormat}"),
-                    new Text("Extension : ${_recording.extension}"),
-                    new Text(
-                        "Audio recording duration : ${_recording.duration.toString()}")
-                  ]),
-            ),
-          ],
-        ));
+                  ],
+                ))));
   }
 
   _start() async {
@@ -109,5 +122,60 @@ class _SoundRecordPageState extends State<SoundRecordPage> {
       _isRecording = isRecording;
     });
     _controller.text = recording.path;
+    _route();
+  }
+
+  _route() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => ResultPage()));
+  }
+}
+
+class ResultPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var height = ScreenUtil.screenHeight;
+    var width = ScreenUtil.screenWidth;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("錄製結果"),
+      ),
+      body: Center(
+        child: Container(
+            height: ScreenUtil.screenHeight,
+            width: ScreenUtil.screenWidth,
+            color: Colors.pink[100],
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: height / 10),
+                  child: Text("與正確拍痰符合度",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 30)),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 30),
+                  child: Text("90%",
+                      textAlign: TextAlign.left,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 70)),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 30, bottom: 70),
+                  child: Image.asset('assets/recordResult.png', scale: 0.6),
+                ),
+                RaisedButton(
+                  //padding:EdgeInsets.only(top: 50) ,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('返回首頁', style: TextStyle(fontSize: 25)),
+                  color: Colors.purple[200],
+                )
+              ],
+            )),
+      ),
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'chart.dart';
 import 'soundRecord.dart';
+import 'moredetails.dart';
 
 void main() {
   runApp(MyApp());
@@ -94,51 +95,56 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(fontSize: 25),
                       ),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.pink[50],
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 4,
-                            offset: Offset(0, 2), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 25, left: 20, bottom: 25, right: 30),
-                            child: Text(
-                              "13:50",
-                              style: TextStyle(fontSize: 60),
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: Text(
-                                  "拍擊力道： 適中",
-                                  style: TextStyle(fontSize: 23),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: Text(
-                                  "拍擊次數：130次",
-                                  style: TextStyle(fontSize: 23),
-                                ),
+                    GestureDetector(
+                        onTap: () {
+                          _route();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.pink[50],
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 4,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
                               ),
                             ],
-                          )
-                        ],
-                      ),
-                    ),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 25, left: 20, bottom: 25, right: 30),
+                                child: Text(
+                                  "13:50",
+                                  style: TextStyle(fontSize: 60),
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 5),
+                                    child: Text(
+                                      "拍擊力道： 適中",
+                                      style: TextStyle(fontSize: 23),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 5),
+                                    child: Text(
+                                      "拍擊次數：130次",
+                                      style: TextStyle(fontSize: 23),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        )),
                     Row(
                       children: <Widget>[
                         Padding(
@@ -222,5 +228,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 )),
           ],
         ));
+  }
+
+  _route() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => DetailPage()));
   }
 }
