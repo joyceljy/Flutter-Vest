@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'chart.dart';
+import 'soundRecord.dart';
 
 void main() {
   runApp(MyApp());
@@ -198,7 +199,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ChartPage()));
+                                          builder: (context) =>
+                                              SoundRecordPage()));
                                 },
                                 child: Column(
                                   children: <Widget>[
